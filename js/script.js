@@ -4,8 +4,8 @@
 console.log(resposta);
 */
 
-var a = 10;
-var b = 33;
+const a = 10;
+const b = 33;
 
 function somar(a, b){
 
@@ -15,6 +15,7 @@ function somar(a, b){
 
 console.log(somar(2, 5));
 
+/*
 document.getElementById("btn-calcular").onclick = function(){
 
 	var valorA = document.getElementById("valor-a").value;
@@ -22,4 +23,12 @@ document.getElementById("btn-calcular").onclick = function(){
 
 	alert(parseInt(valorA) + parseInt(valorB));
 
-}
+}*/
+
+document.querySelector("#btn-calcular").addEventListener("click", function(){
+	let valorA = document.querySelector("#valor-a").value;
+	let valorB = document.querySelector("#valor-b").value;
+	if(valorA.length > 0 && valorB.length > 0){
+	alert(parseInt(valorA) + parseInt(valorB));}
+	else{alert("Por favor, insira um número nas posições!")}
+});
