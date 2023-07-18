@@ -28,7 +28,10 @@ document.getElementById("btn-calcular").onclick = function(){
 document.querySelector("#btn-calcular").addEventListener("click", function(){
 	let valorA = document.querySelector("#valor-a").value;
 	let valorB = document.querySelector("#valor-b").value;
+	if (document.querySelector("#sub").checked == true) {
+	alert(parseInt(valorA) - parseInt(valorB));
+	}else{
 	if(valorA.length > 0 && valorB.length > 0){
 	alert(parseInt(valorA) + parseInt(valorB));}
-	else{alert("Por favor, insira um número nas posições!")}
+	else{alert("Por favor, insira um número nas posições!")}}
 });
