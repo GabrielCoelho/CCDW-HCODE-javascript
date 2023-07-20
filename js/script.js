@@ -1,12 +1,28 @@
 var form = document.querySelector('#form');
 
-function includeThird(tipo){
+function includeThird(tipo, atributos){
 	deleteThird();
-	var novoItem = document.createElement("input");
-	novoItem.setAttribute('type', tipo);
-	novoItem.setAttribute('id', 'valor-c');
-	novoItem.setAttribute('placeholder', 'valor 3');
-	form.insertBefore(novoItem, document.querySelector("#btn-calcular"));
+	if(tipo != 'select')
+	{
+		var novoItem = document.createElement("input");
+		novoItem.setAttribute('type', tipo);
+		novoItem.setAttribute('id', 'valor-c');
+		novoItem.setAttribute('placeholder', 'valor 3');
+		form.insertBefore(novoItem, document.querySelector("#btn-calcular"));
+	}
+	else 
+	{
+		var novasOpcoes = document.createElement("select");
+		novasOpcoes.setAttribute('id', 'valor-c')
+		var opti = [];
+		atributos.forEach(j => opti = Array.from(atributos));
+		console.log(opti);
+		var setOptionDOM = [];
+		opti.forEach(valor => {
+			novasOpcoes.insertAdjacentHTML("beforeend", "<option value=\"" + opti[valor] + "\" />")});
+		
+	}
+
 }
 
 function deleteThird(){
@@ -125,5 +141,12 @@ document.querySelector("#btn-calcular").addEventListener("click", function(){
 		}
 		console.log(a,b,c);
 		alert(a + "maior que " + b + " que é maior que " + c);
+	}
+
+	if(document.querySelector("#ex24").checked == true)
+	{
+		let cromos24 = document.getElementById('#valor-c').value;
+
+		if(cromos24 == "masculino");
 	}
 });
