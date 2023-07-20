@@ -13,14 +13,14 @@ function includeThird(tipo, atributos){
 	else 
 	{
 		var novasOpcoes = document.createElement("select");
-		novasOpcoes.setAttribute('id', 'valor-c')
+		novasOpcoes.setAttribute('id', 'valor-c');
 		var opti = [];
 		atributos.forEach(j => opti = Array.from(atributos));
 		console.log(opti);
-		var setOptionDOM = [];
+		form.insertBefore(novasOpcoes, document.querySelector("#btn-calcular"));
 		opti.forEach(valor => {
-			novasOpcoes.insertAdjacentHTML("beforeend", "<option value=\"" + opti[valor] + "\" />")});
-		
+			novasOpcoes.insertAdjacentHTML("beforeend", "<option value=\"" + valor + "\">"+valor+"</option>");
+		});
 	}
 
 }
@@ -41,29 +41,55 @@ calcs.forEach(function(checkbox){
 		calcAtivas = Array.from(calcs).filter(i => i.checked).map(i => i.value)
 		if(document.querySelector("#ex1").checked == true)
 		{
+			document.querySelector("#valor-a").placeholder='Ax² +';
+			document.querySelector("#valor-b").placeholder='Bx +';
 			includeThird("number");
+			document.querySelector("#valor-c").placeholder='C';
 		}
 		else if(document.querySelector("#ex22").checked == true)
 		{
+			document.querySelector("#valor-a").placeholder='Primeiro Valor';
+			document.querySelector("#valor-b").placeholder='Segundo Valor';
 			includeThird("number");
+			document.querySelector("#valor-c").placeholder='Terceiro Valor';
 		}
 		else if(document.querySelector("#ex24").checked == true)
 		{
-			includeThird("text");
+			includeThird('select', ['Masculino', 'Feminino']);
 			document.querySelector("#valor-b").disabled = true;
+			document.querySelector("#valor-a").placeholder='Altura (em cm)';
+			document.querySelector("#valor-b").placeholder='';
 		}
-		else
+		else if (document.querySelector("#sub").checked == true)
 		{
+			document.querySelector("#valor-a").placeholder='Valor a Subtrair';
+			document.querySelector("#valor-b").placeholder='Valor 2 a Subtrair';
+		}
+		else if(calcAtivas == [] || calcAtivas == "")
+		{
+			document.querySelector("#valor-a").placeholder='Valor a Somar';
+			document.querySelector("#valor-b").placeholder='Valor 2 a Somar';
 			deleteThird();
 			document.querySelector("#valor-b").disabled = false;
 		}
+		else if (document.querySelector("#exb").checked == true)
+		{
+			document.querySelector("#valor-a").placeholder='Altura do Cilindro';
+			document.querySelector("#valor-b").placeholder='Raio do Cilindro';
+		}	
+		else if(document.querySelector("#ex3").checked == true)
+		{
+			document.querySelector("#valor-b").disabled = true;
+			document.querySelector("#valor-a").placeholder='Raio da Esfera';
+			document.querySelector("#valor-b").placeholder='';
+		}
+
 	})
 });
 
 document.querySelector("#btn-calcular").addEventListener("click", function(){
 	let a = document.querySelector("#valor-a").value;
 	let b = document.querySelector("#valor-b").value;
-
 	if(calcAtivas == [] || calcAtivas == "")
 	{
 		if(a.length > 0 && b.length > 0)
@@ -92,6 +118,7 @@ document.querySelector("#btn-calcular").addEventListener("click", function(){
 	if(document.querySelector("#ex1").checked == true)
 	{
 		let c = document.querySelector("#valor-c").value;
+		document.querySelector("#valor-b").placeholder='C';
 
 		let x = ((-b + (Math.sqrt((b * b) - 4 * a * c))) / (2 * a));
 		let xNeg = ((-b - (Math.sqrt((b * b) - 4 * a * c))) / (2 * a));
@@ -145,8 +172,17 @@ document.querySelector("#btn-calcular").addEventListener("click", function(){
 
 	if(document.querySelector("#ex24").checked == true)
 	{
-		let cromos24 = document.getElementById('#valor-c').value;
-
-		if(cromos24 == "masculino");
+		let demarcador = document.querySelector('#valor-c');
+		let cromos24 = demarcador.options[demarcador.selectedIndex].text;
+		let pesoIdeal
+		if(cromos24 == "Masculino"){
+			pesoIdeal = Math.round(((72.7*a)/100)-58);
+			alert("O peso ideal para sua altura é: " + pesoIdeal + "Kg")
+		}else if(cromos24 == "Feminino"){
+			pesoIdeal = Math.round(((62.1*a)/100)-44.7);
+			alert("O peso ideal para sua altura é: " + pesoIdeal + "Kg")
+		}else{
+			alert("Por favor, escolha um sexo");
+		}
 	}
 });
