@@ -83,6 +83,11 @@ calcs.forEach(function(checkbox){
 			document.querySelector("#valor-a").placeholder='Raio da Esfera';
 			document.querySelector("#valor-b").placeholder='';
 		}
+		else if(document.querySelector("#ex25").checked == true)
+		{
+			document.querySelector("#valor-a").placeholder='Ano de nascimento';
+			document.querySelector("#valor-b").disabled = true;
+		}
 
 	})
 });
@@ -183,6 +188,31 @@ document.querySelector("#btn-calcular").addEventListener("click", function(){
 			alert("O peso ideal para sua altura é: " + pesoIdeal + "Kg")
 		}else{
 			alert("Por favor, escolha um sexo");
+		}
+	}
+
+	if(document.querySelector("#ex25").checked == true)
+	{
+		const idadeVota = 16;
+		const idadeCNH = 18;
+		var hoje = new Date();
+		var anoAtual = hoje.getFullYear();
+		var idade = anoAtual - a;
+		if (anoAtual < a)
+		{
+			alert("Por favor, digite um ano válido!");
+		} else if(idade < idadeVota)
+		{
+			alert("Você tem "+ idade + " anos!");
+		} else if(idade >= idadeVota && idade < idadeCNH)
+		{
+			alert("Parabéns pelos seus " + idade + " anos! Com essa idade você já pode votar! Que tal tirar seu título de Eleitor?");
+		} else if (idade >= idadeCNH)
+		{
+			alert("Hey amigão, alto lá - passe no DETRAN para tirar sua CNH pois você já tem " + idade + " anos.");
+		} else
+		{
+			console.log('Erro de percurso');
 		}
 	}
 });
