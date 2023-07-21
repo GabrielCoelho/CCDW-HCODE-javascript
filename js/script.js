@@ -87,6 +87,11 @@ calcs.forEach(function(checkbox){
 		{
 			document.querySelector("#valor-a").placeholder='Ano de nascimento';
 			document.querySelector("#valor-b").disabled = true;
+		} 
+		else if(document.querySelector("#ex28").checked == true)
+		{
+			document.querySelector("#valor-a").placeholder='Preço do Produto';
+			document.querySelector("#valor-b").placeholder='Código de Pagamento';
 		}
 
 	})
@@ -215,4 +220,83 @@ document.querySelector("#btn-calcular").addEventListener("click", function(){
 			console.log('Erro de percurso');
 		}
 	}
+	if(document.querySelector("#ex28").checked == true)
+	{
+		let precoFinal;
+		let precoParcela;
+		if(b == 1)
+		{
+			precoFinal = a - (a*0.1);
+			alert("Devido o pagamento à vista em dinheiro, lhe demos um desconto de 10% - total a pagar: " + precoFinal);
+		} else if(b == 2)
+		{
+			precoFinal = a - (a*0.05);
+			alert("Devido o pagamento à vista no crédito, lhe demos um desconto de 5% - total a pagar: " + precoFinal);
+		} else if(b==3)
+		{
+			precoFinal = a;
+			precoParcela = a/2;
+			alert("O pagamento em duas parcelas não recebe descontos - total a pagar: " + precoFinal + "; preço de cada parcela: "+ precoParcela);
+		} else if(b==4)
+		{
+			precoFinal = parseInt(a) + (a*0.1);
+			precoParcela = Math.floor10((a/3), -1);
+			alert("O pagamento em três parcelas recebe um aumento de 10% - total a pagar: " + precoFinal + "; preço de cada parcela: "+ precoParcela);
+		} else
+		{
+			alert("Por favor, digite um código válido: 1 - à Vista no dinheiro; 2 - à Vista no crédito; 3 - Parcelado em 2x; 4 - Parcelado em 3x");
+		}
+	}
 });
+
+//Função copiada do site https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil
+// Utilizei no exercício 28 pois nem sempre o parcelamento em 3x dá um número inteiro, e precisava arredondar no decimal.
+// Closure
+(function(){
+/**
+   * Decimal adjustment of a number.
+   *
+   * @param  {String}  type  The type of adjustment.
+   * @param  {Number}  value  The number.
+   * @param  {Integer}  exp    The exponent (the 10 logarithm of the adjustment base).
+   * @returns  {Number}      The adjusted value.
+   */
+function decimalAdjust(type, value, exp) {
+    // If the exp is undefined or zero...
+    if (typeof exp === 'undefined' || +exp === 0) {
+      return Math[type](value);
+    }
+    value = +value;
+    exp = +exp;
+    // If the value is not a number or the exp is not an integer...
+    if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+      return NaN;
+    }
+    // Shift
+    value = value.toString().split('e');
+    value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+    // Shift back
+    value = value.toString().split('e');
+    return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+  }
+
+  // Decimal round
+  if (!Math.round10) {
+    Math.round10 = function(value, exp) {
+      return decimalAdjust('round', value, exp);
+    };
+  }
+  // Decimal floor
+  if (!Math.floor10) {
+    Math.floor10 = function(value, exp) {
+      return decimalAdjust('floor', value, exp);
+    };
+  }
+  // Decimal ceil
+  if (!Math.ceil10) {
+    Math.ceil10 = function(value, exp) {
+      return decimalAdjust('ceil', value, exp);
+    };
+  }
+
+})();
